@@ -1,0 +1,75 @@
+{% extends 'base2.html' %}
+{% block content %}
+
+<div class="container">
+    {% if user.is_authenticated %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-10 col-sm-12">
+            <div class="card mb-5">
+                <div class="card-body">
+    <form method="POST" enctype="multipart/form-data" class="text-center">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="urun_name">Ürün Adı</span>
+            <input type="text" name="title" required value="{{ product.title }}" class="form-control" placeholder="ürün adı giriniz..." >
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroup">Kategori</label>
+            <select name="category" required class="form-select" aria-label="kategori" aria-describedby="kategori" id="inputGroup">
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == product.category.id %} selected {% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>  
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="tanim">ürün açıklaması</span>
+            <textarea name="description" required class="form-control" placeholder="ürün açıklaması giriniz..." aria-describedby="tanim" aria-label="Tanim">{{ product.description }}</textarea>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="price">Fiyat</span>
+            <input type="number" name="oldPrice" required value="{{ product.price }}" class="form-control">
+        </div>
+        <div class="mb-3 text-center">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="Product Image" class="img-fluid rounded">
+            {% endif %}
+        </div>
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="file1">
+        </div>
+        
+        <div class="input-group mb-3">
+            <span class="input-group-text">Whatsapp Mesajı</span>
+            <textarea name="buyingMassage" required placeholder='Satın alma sırasında WhatsApp mesajı' class="form-control">{{ product.buyingMassage }}</textarea>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="submit" name="btnUpdateHotdeal" class="btn btn-success">Değişiklikleri Kaydet</button>
+            <button type="button" name="btnDeleteProduct" onclick="confirmDelete()" class="btn btn-danger">Sil</button>
+        </div>
+        {% if success %}
+            <p>{{ success }}</p>
+        {% endif %}
+    </form>
+
+    <script>
+        function confirmDelete() {
+            const confirmed = confirm("Bu öğeyi silmek istediğinizden emin misiniz?");
+            if (confirmed) {
+                
+                    setTimeout(function () {
+                      window.location.href = "{% url 'deleteProduct' product.id %}";
+                    }, 5);
+            
+            }
+        }
+    </script>
+
+{% else %}
+    <script>
+      setTimeout(function () {
+        window.location.href = "{% url 'viewProduct' product.id %}";
+      }, 2000);
+    </script>
+{% endif %}
+
+{% endblock %}

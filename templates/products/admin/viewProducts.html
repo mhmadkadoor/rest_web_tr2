@@ -1,0 +1,42 @@
+{% extends 'base2.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<a href="{% url 'admin' %}"><button>Yönetim sayfasına dön</button></a>
+<form method="POST" action="{% url 'viewProductsAdmin' %}"  enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="title">Ürün Adı</label>
+    <input type="text" name="title" required><br>
+    <label for="description">tanım</label>
+    <input type="text" name="description" required><br>
+    <label for="price">Fiyat</label>
+    <input type="number" name="price" required><br>
+    <label for="category">Kategori</label>
+    <select name="category" required placeholder="category">
+        {% for category in restaurant.categories.all %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+    {% endfor %}
+      </select>
+    <label for="image">Fotoğraf</label>
+    <input type="file" required name="image">
+    <label for="buyingMassage">Alma mesajı</label>
+    <textarea name="buyingMassage" required placeholder='Satın alma sırasında WhatsApp mesajı'></textarea>
+    <button type="submit" name='btnAddProduct'>Ekle</button>
+
+</form>
+
+{% if success %}
+    <h3>{{ success }}</h3>
+{% endif %}
+
+{% if error %}
+    <h3>{{ error }}</h3>
+{% endif %}
+
+<h1>Ürünler</h1>
+ {% for product in products %}
+    {% include "products/product.html" %}
+{% endfor %}
+{% else %}
+    {% include '403.html' %}
+{% endif %}
+{% endblock %}

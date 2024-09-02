@@ -1,0 +1,45 @@
+<div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4 d-flex ">
+      <img
+        class="img-fluid"
+        src="{{ hotdeal.image.url }}"
+        alt="{{ hotdeal.title }}"
+        
+      />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h2 class="card-title">{{ hotdeal.title }}</h2>
+        <hr>
+        <p class="text-muted card-text ">{{ hotdeal.category }}</p>
+        <p class="card-text fs-2"><strike class="text-muted fs-5">
+          {{ hotdeal.oldPrice }} {{ restaurant.currency }}</strike>
+          {{ hotdeal.newPrice }} {{ restaurant.currency }}
+        </p>
+        
+        
+        
+        <p class="text-muted card-text">{{ hotdeal.description }}</p>
+        <p class="text-muted card-text">{{ hotdeal.end_time }}</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'editHotdeal' hotdeal.id %}" class="btn btn-primary">
+          Düzenle
+        </a>
+        {% else %}
+        <a
+          href="https://wa.me/{{ restaurant.whatsapp }}?text={{ hotdeal.buyingMassage }}"
+          target="_blank"
+          class="btn btn-success"
+        >
+          WhatsApp
+        </a>
+        <a href="{% url 'viewHotdeal' hotdeal.id %}" class="btn btn-info">
+          Fazla
+        </a>
+        {% endif %}
+      </div>
+      
+    </div>
+  </div>
+</div>

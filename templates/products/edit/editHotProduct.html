@@ -1,0 +1,84 @@
+{% extends 'base2.html' %}
+{% block content %}
+<style>
+    .form-control:focus, .form-select:focus {
+        outline: none; /* Removes the outline */
+        box-shadow: none; /* Removes the default shadow on focus */
+    }
+</style>
+<div class="container">
+    {% if user.is_authenticated %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-10 col-sm-12">
+            <div class="card mb-5">
+                <div class="card-body">
+                    <form method="POST" action="{% url 'editHotdeal' hotdeal.id %}" enctype="multipart/form-data" class="text-center">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="urun_name">Ürün Adı</span>
+                            <input type="text" name="title" required value="{{ hotdeal.title }}" class="form-control" placeholder="ürün adı giriniz..." aria-label="Username" aria-describedby="urun_name">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="tanim">ürün açıklaması</span>
+                            <textarea name="description" required class="form-control" placeholder="ürün açıklaması giriniz..." aria-describedby="tanim" aria-label="Tanim">{{ hotdeal.description }}</textarea>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="old_price">Eski Fiyat</span>
+                            <input type="number" name="oldPrice" required value="{{ hotdeal.oldPrice }}" class="form-control" aria-label="Username" aria-describedby="old_price">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="New_Price">Yeni Fiyat</span>
+                            <input type="number" name="newPrice" required value="{{ hotdeal.newPrice }}" class="form-control" aria-label="yeni fiyat" aria-describedby="New_Price">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="teklif">Teklif Bitiş Tarihi</span>
+                        <input type="datetime-local" name="end_time" value= "{{ hotdeal.end_time }}" class="form-control" aria-label="teklif bitiş" aria-describedby="teklif" required >
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroup">Kategori</label>
+                            <select name="category" required class="form-select" aria-label="kategori" aria-describedby="kategori" id="inputGroup">
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}" {% if category.id == hotdeal.category.id %} selected {% endif %}>{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3 text-center">
+                            <img src="{{ hotdeal.image.url }}" alt="Product Image" class="img-fluid rounded">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" id="file1">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Whatsapp Mesajı</span>
+                            <textarea name="buyingMassage" required placeholder='Satın alma sırasında WhatsApp mesajı' class="form-control">{{ hotdeal.buyingMassage }}</textarea>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" name="btnUpdateHotdeal" class="btn btn-success">Değişiklikleri Kaydet</button>
+                            <button type="button" name="btnDeleteProduct" onclick="confirmDelete()" class="btn btn-danger">Sil</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function confirmDelete() {
+            const confirmed = confirm("Bu öğeyi silmek istediğinizden emin misiniz?");
+            if (confirmed) {
+                setTimeout(function () {
+                    window.location.href = "{% url 'deleteHotdeal' hotdeal.id %}";
+                }, 5);
+            }
+        }
+    </script>
+
+    {% if success %}
+        <h3>{{ success }}</h3>
+    {% endif %}
+    
+    {% else %}
+        {% include '403.html' %}
+    {% endif %}
+</div>
+
+{% endblock %}

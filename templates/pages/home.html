@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .img-bg {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/static/img/backMain.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed; /* Keeps the background fixed; */
+        min-height: 100vh;/* Ensures the background covers at least the viewport height */
+        position: relative; /* Allows absolute positioning within */
+    }
+</style> 
+<div class="img-bg">
+   <div class="container mt-5">
+   
+    <a href="{% url 'all' %}" type="button" class="text-decoration-none btn btn-danger">Tüm ürünleri görüntüle</a>
+   
+    <h1 class="mb-5 text-light">Teklifler:</h1>
+    {% for hotdeal in hotdeals %}
+        {% include "products/hotdeal.html" %}
+    {% endfor %}
+
+
+
+    <h1 class="text-light">Ürünler:</h1>
+    {% for category in categories %}
+            <h2 class="bg-light text-danger  text-center pt-1 pb-1">{{ category }}</h2>
+
+        {% for product in products %}
+            {% if product.category == category %}
+                
+                {% include "products/product.html" %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+     
+            </div>
+        </div>
+{% endblock %}

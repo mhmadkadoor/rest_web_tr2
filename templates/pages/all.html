@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+        <h1 class="text-center">Tüm yemekler Hadi usta </h1>
+{% for hotdeal in hotdeals %}
+
+{% include "products/hotdeal.html" %}
+{% endfor %}
+
+
+{% for product in products %}
+       
+        {% include "products/product.html" %}
+{% endfor %}
+</div>
+{% endblock %}

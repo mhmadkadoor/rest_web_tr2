@@ -1,0 +1,58 @@
+{% extends 'base2.html' %}
+{% block content %}
+
+<a href="{% url 'admin' %}"><button>Yönetim sayfasına dön</button></a>
+
+
+<img src="{{ restaurant.image.url }}" alt="Image">
+<img src="{{ restaurant.cover.url }}" alt="Cover">
+
+<form method="POST" action="/proSettings/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="image" accept="image/*" />
+    <input type="file" name="cover"  accept="image/*" />
+    <input type="text" name="name" required placeholder="Restoranın adı" value="{{ restaurant.name }}" />
+    <input type="text" name="openTime" required placeholder="açılış zamanı" value="{{ restaurant.openTime }}" />
+    <input type="text" name="closeTime" required placeholder="Kapanış saati" value="{{ restaurant.closeTime }}" />
+    <input type="text" name="currency" placeholder="para" value="{{ restaurant.currency }}" />
+    <input type="text" name="tiktok" placeholder="Tiktok" value="{{ restaurant.tiktok }}" />
+    <input type="text" name="whatsapp" placeholder="Whatsapp" value="{{ restaurant.whatsapp }}" />
+    <input type="text" name="facebook" placeholder="Facebook" value="{{ restaurant.facebook }}" />
+    <input type="text" name="instagram" placeholder="Instagram" value="{{ restaurant.instagram }}" />
+    <input type="text" name="googleMaps" hidden="True" placeholder="Google maps" value="{{ restaurant.googleMaps }}" />
+    <input type="submit" name= "btnUpdateInfo" value="kaydetmek" />
+</form>
+
+{% if success1 %}
+    <p>{{ success1 }}</p>
+{% endif %}
+
+{% for category in categories %}
+    <p>{{ category.name }}</p>
+{% endfor %}
+
+
+
+
+<form method="POST" action="{% url 'proSettings' %}">
+    {% csrf_token %}
+    <input type="text" name="newCategoryName" placeholder="Yeni kategori adı">
+    <input type="submit" name="btnAddCategory" value="Kategori ekle">
+    <select name="category">
+    {% for category in restaurant.categories.all %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+    {% endfor %}
+ </select>
+    <input type="submit" name="btnDeleteCategory" value="Kategoriyi sil">
+
+</form>
+{% if success3 %}
+    <p>{{ success3 }}</p>
+{% endif %}
+
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+
+{% endblock %}

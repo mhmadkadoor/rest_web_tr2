@@ -1,0 +1,42 @@
+{% extends "base2.html" %} {% block content %}
+<div class="container">
+  <h1 class="text-center">
+    {{ user.username }} Merhaba, Bu yönetici sayfasıdır
+  </h1>
+  <ul class="list-group mt-4">
+    <a
+      href="{% url 'home' %}"
+      class="alert alert-warning text-decoration-none fs-3 "
+      role="alert"
+    >
+      Restoranın sayfası</a
+    >
+
+    <a
+      href="{% url 'proSettings' %}"
+      class="alert alert-secondary text-decoration-none fs-3 mt-4"
+      role="alert"
+      >Restoran ayarları</a
+    >
+    
+    <a
+      href="{% url 'viewProductsAdmin' %}"
+      class="alert alert-info text-decoration-none fs-3 mt-4"
+      role="alert"
+      >Ürünleri görüntüle</a
+    >
+    <a
+      href="{% url 'viewHotdealsAdmin' %}"
+      class="alert alert-success text-decoration-none fs-3 mt-4"
+      role="alert"
+      >Teklifleri görüntüle</a
+    >
+    <a
+      href="{% url 'logout' %}"
+      class="alert alert-danger text-decoration-none fs-3 mt-4"
+      role="alert"
+      >Oturumu kapat</a
+    >
+  </ul>
+</div>
+{% endblock %}

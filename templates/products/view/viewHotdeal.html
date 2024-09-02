@@ -1,0 +1,69 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-5">
+  <div class="card mb-3 position-relative">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ hotdeal.image.url }}" alt="Product Image" class="img-fluid rounded-start"/>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h1 class="card-head">{{ hotdeal.name }}</h1>
+        <h3>{{ hotdeal.category.name }}</h3>
+        <hr>
+        <p class="card-text">{{ hotdeal.description }}</p>
+        <p class="text-light card-text countdown bg-danger text-center position-absolute top-0 end-0 p-2  " style="border-radius:30px 0px 30px 0px; " data-end-time="{{ hotdeal.end_time|date:'c' }}"></p>
+        <p class="card-text">{{ hotdeal.price }}</p>
+        <a
+          href="https://wa.me/{{restaurant.whatsapp}}/?text={{hotdeal.buyingMassage}}"
+          target="_blank" class="text-decoration-none btn btn-danger"
+          >WhatsApp</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      function updateCountdown() {
+          const countdownElements = document.querySelectorAll('.countdown');
+          const now = new Date().getTime();
+
+          countdownElements.forEach(element => {
+              const endTimeString = element.getAttribute('data-end-time');
+              const endTime = new Date(endTimeString).getTime();
+
+              // Check if endTime is valid
+              if (isNaN(endTime) || endTime <= 0) {
+                  element.innerHTML = 'Invalid date';
+                  return;
+              }
+
+              const timeRemaining = endTime - now;
+
+              if (timeRemaining < 0) {
+                  element.innerHTML = 'Deal has ended';
+                  // Remove the entire deal card from the DOM
+                  const card = element.closest('.col-md-4');
+                  if (card) {
+                      card.remove();
+                  }
+              } else {
+                  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                  const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                  const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                  element.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+              }
+          });
+      }
+
+      // Initial update
+      updateCountdown();
+      // Update countdown every second
+      setInterval(updateCountdown, 1000);
+  });
+</script>
+
+{% endblock %}

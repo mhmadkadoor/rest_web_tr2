@@ -1,0 +1,31 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+
+<img src="{{ product.image.url }}" alt="Product Image">
+<h1>{{ product.name }}</h1>
+<a>{{ product.category.name }}</a>
+<p>{{ product.description }}</p>
+<p>{{ product.price }}</p>
+<a href="https://wa.me/{{restaurant.whatsapp}}/?text={{product.buyingMassage}}" target="_blank">WhatsApp</a>
+
+<a href="{% url 'editProduct' product.id %}" class="btn btn-primary">Düzenle</a>
+
+
+{% else %}
+
+  {% include "403.html" %}
+
+    <script>
+      setTimeout(function () {
+        window.location.href = "{% url 'viewProduct' product.id %}";
+      }, 5);
+    </script>
+
+{% endif %}
+
+
+{% endblock %}

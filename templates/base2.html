@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ restaurant.image.url }}" type="image/jpg"/>
+    
+    {% if thisPage == "admin" %}
+        <link rel="stylesheet" href="{% static 'css/pages/admin.css' %}">
+    {% elif thisPage == "proSettings" %}
+        <link rel="stylesheet" href="{% static 'css/pages/proSettings.css' %}">
+    {% elif thisPage == "viewProduct" %}
+        <link rel="stylesheet" href="{% static 'css/products/view/viewProduct.css' %}">
+    {% elif thisPage == "viewProductAdmin" %}
+        <link rel="stylesheet" href="{% static 'css/products/view/viewProductAdmin.css' %}">
+    {% elif thisPage == "editProduct" %}
+        <link rel="stylesheet" href="{% static 'css/products/edit/editProduct.css' %}">
+    {% elif thisPage == "viewProductsAdmin" %}
+        <link rel="stylesheet" href="{% static 'css/products/view/viewProductsAdmin.css' %}">
+    {% elif thisPage == "editHotdeal" %}
+        <link rel="stylesheet" href="{% static 'css/hotdeals/edit/editHotdeal.css' %}">
+    {% elif thisPage == "viewHotdeal" %}
+        <link rel="stylesheet" href="{% static 'css/hotdeals/view/viewHotdeal.css' %}">
+    {% elif thisPage == "viewHotdealsAdmin" %}
+        <link rel="stylesheet" href="{% static 'css/hotdeals/view/viewHotdealsAdmin.css' %}">
+    {% elif thisPage == "viewHotdealAdmin" %}
+        <link rel="stylesheet" href="{% static 'css/hotdeals/view/viewHotdealAdmin.css' %}">
+    {% endif %}
+    
+    <link rel="stylesheet" href="{% static 'css/base2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+    <title>{{ restaurant.name }}</title>
+</head>
+<body>
+    {% include "navbar2.html" %}
+
+    <div class="container mt-5">
+        {% block content %}
+        <p class="paragraph">ONLY Base2</p>
+        {% endblock %}
+    </div>
+    
+    <!-- Uncomment this if you want to include the footer -->
+    <!-- <footer>
+        {% include "footer2.html" %}
+    </footer> -->
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends 'base2.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<a href="{% url 'admin' %}"><button>Yönetim sayfasına dön</button></a>
+
+<form method="POST" action="{% url 'viewHotdealsAdmin' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="title">Ürün Adı</label>
+    <input type="text" name="title" required><br>
+    <label for="description">tanım</label>
+    <input type="text" name="description" required><br>
+    <label for="end_time">Teklifin bitiş zamanı</label>
+    <input type="datetime-local" name="end_time" required><br>
+    <label for="price">Eski Fiyat</label>
+    <input type="number" name="oldPrice" required><br>
+    <label for="newPrice">Yeni Fiyat</label>
+    <input type="number" name="newPrice" required><br>
+    <label for="category">Kategori</label>
+    <select name="category" required placeholder="category">
+        {% for category in restaurant.categories.all %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+            <option value="0">Diğer</option>
+      </select>
+</div>  
+    <label for="image">Fotoğraf</label>
+    <input type="file" name="image" required><br>
+    <label for="buyingMassage">Alma mesajı </label>
+    <textarea name="buyingMassage" required placeholder='Satın alma sırasında WhatsApp mesajı'></textarea>
+    <button type="submit" name='btnAddHotdeal' >Ekle</button>
+</form>
+
+{% if success %}
+    <h3>{{ success }}</h3>
+{% endif %}
+
+{% if error %}
+    <h3>{{ error }}</h3>
+{% endif %}
+
+<h1>العروض</h1>
+ {% for hotdeal in hotdeals %}
+   
+    {% include "products/hotdeal.html" %}
+{% endfor %}
+{% else %}
+    {% include '403.html' %}
+{% endif %}
+{% endblock %}
