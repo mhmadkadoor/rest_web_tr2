@@ -1,0 +1,15 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<img src="{{ product.image.url }}" alt="Product Image">
+<h1>{{ product.name }}</h1>
+<a>{{ product.category.name }}</a>
+<p>{{ product.description }}</p>
+<p>{{ product.price }}</p>
+<a href="https://wa.me/{{restaurant.whatsapp}}/?text={{product.buyingMassage}}" target="_blank">WhatsApp</a>
+
+{% endblock %}
