@@ -16,16 +16,19 @@
    
     <a href="{% url 'all' %}" type="button" class="text-decoration-none btn btn-danger">Tüm ürünleri görüntüle</a>
    
-    <h1 class="mb-5 text-light">Teklifler:</h1>
+    <h1 class="text-light d-flex align-items-center justify-content-center text-center pt-4 pb-2">
+        Teklifler 
+        <i class="fa-solid fa-fire fs-1 ps-3 text-danger"></i>
+    </h1>
     {% for hotdeal in hotdeals %}
         {% include "products/hotdeal.html" %}
     {% endfor %}
 
 
 
-    <h1 class="text-light">Ürünler:</h1>
+    <h1 class="text-light d-flex align-items-center justify-content-center text-center pt-5 pb-2">Ürünler<i class="fa-solid fa-bowl-food ps-3 fs-1 text-warning"></i></h1>
     {% for category in categories %}
-            <h2 class="bg-light text-danger  text-center pt-1 pb-1">{{ category }}</h2>
+            <h2 class="bg-light text-danger  text-center pt-2 pb-2 mb-2 mt-3 " style="border-radius:50px;">{{ category }}</h2>
 
         {% for product in products %}
             {% if product.category == category %}

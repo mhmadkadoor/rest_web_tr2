@@ -1,8 +1,10 @@
-<div class="container">
-    <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card">
-                    <img class="card-img-top" src="{{ product.image.url }}" alt="Card image cap">
+<div class="card mt-3 ">
+    <div class="row g-0">
+            <div class="col-md-4 d-flex">
+                
+                    <img class="img-fluid" src="{{ product.image.url }}" alt="Card image cap">
+            </div>
+            <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.title }}</h5>
                         <h4 class="card-title">{{ product.price }} {{ restaurant.currency }}</h4>
@@ -12,12 +14,13 @@
                             <a href="{% url 'editProduct' product.id %}" class="btn btn-primary">Düzenle</a>
                             
                         {% else %}
-                            <a href="https://wa.me/{{restaurant.whatsapp}}/?text={{product.buyingMassage}}" target="_blank" class="btn btn-secondary">WhatsApp</a>
-                            <a href="{% url 'viewProduct' product.id %}" class="btn btn-primary">Fazla</a>
+                            <a href="https://wa.me/{{restaurant.whatsapp}}/?text={{product.buyingMassage}}" target="_blank" class="btn btn-primary">WhatsApp</a>
+                            
                         {% endif %}
                     </div>
                 </div>
             </div>
+        </div>
        
-    </div>
-</div>
+
+

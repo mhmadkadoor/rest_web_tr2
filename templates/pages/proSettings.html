@@ -1,58 +1,109 @@
 {% extends 'base2.html' %}
 {% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-10 col-sm-12">
+<a href="{% url 'admin' %}" class="btn btn-danger ">Yönetim sayfasına dön</a>
 
-<a href="{% url 'admin' %}"><button>Yönetim sayfasına dön</button></a>
+<div class="card mb-5">
+    <div class="card-body">
 
 
-<img src="{{ restaurant.image.url }}" alt="Image">
-<img src="{{ restaurant.cover.url }}" alt="Cover">
 
 <form method="POST" action="/proSettings/" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="file" name="image" accept="image/*" />
-    <input type="file" name="cover"  accept="image/*" />
-    <input type="text" name="name" required placeholder="Restoranın adı" value="{{ restaurant.name }}" />
-    <input type="text" name="openTime" required placeholder="açılış zamanı" value="{{ restaurant.openTime }}" />
-    <input type="text" name="closeTime" required placeholder="Kapanış saati" value="{{ restaurant.closeTime }}" />
-    <input type="text" name="currency" placeholder="para" value="{{ restaurant.currency }}" />
-    <input type="text" name="tiktok" placeholder="Tiktok" value="{{ restaurant.tiktok }}" />
-    <input type="text" name="whatsapp" placeholder="Whatsapp" value="{{ restaurant.whatsapp }}" />
-    <input type="text" name="facebook" placeholder="Facebook" value="{{ restaurant.facebook }}" />
-    <input type="text" name="instagram" placeholder="Instagram" value="{{ restaurant.instagram }}" />
+    <h1 class="text-center">Restorant Logo</h1>
+    <img src="{{ restaurant.image.url }}" alt="Image" class="img-fluid rounded-pill mb-1">
+
+<div class="input-group mb-3">
+    <input type="file" name="image" accept="image/*" class="form-control" >
+</div>
+<h1 class="text-center">Logo?</h1>
+<img src="{{ restaurant.cover.url }}" alt="Cover" class="img-fluid rounded-pill mb-1">
+    
+    <div class="input-group mb-3">
+        <input type="file" name="cover"  accept="image/*" class="form-control" >
+    </div>
+   
+   
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="urun_name">Restorant Adı</span>
+        <input type="text" name="title" required value="{{ restaurant.name }}" class="form-control" placeholder="Restorant adı giriniz..." >
+    </div>
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="old_price">Açılış zamanı</span>
+        <input type="text" name="openTime" required value="{{ restaurant.openTime }}" class="form-control" >
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="old_price">Kapanış zamanı</span>
+        <input type="text" name="openTime" required value="{{ restaurant.closeTime }}" class="form-control" >
+    </div>
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="old_price">Para birimi</span>
+        <input type="text" name="currency" required value="{{ restaurant.currency }}" class="form-control" >
+    </div>
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text bg-danger text-light" >TikTok</span>
+        <input type="text" name="tiktok" placeholder="Tiktok" value="{{ restaurant.tiktok }}" class="form-control" >
+    </div>
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text bg-primary text-light" >WhatsApp</span>
+        <input type="text" name="whatsapp" placeholder="Whatsapp" value="{{ restaurant.whatsapp }}" class="form-control" >
+    </div>
+   
+    <div class="input-group mb-3">
+        <span class="input-group-text bg-secondary text-light" >FaceBook</span>
+        <input type="text" name="facebook" placeholder="Facebook" value="{{ restaurant.facebook }}"class="form-control" >
+    </div>
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text bg-success text-light" >Instagram</span>
+        <input type="text" name="instagram" placeholder="Instagram" value="{{ restaurant.instagram }}"class="form-control" >
+    </div>
     <input type="text" name="googleMaps" hidden="True" placeholder="Google maps" value="{{ restaurant.googleMaps }}" />
-    <input type="submit" name= "btnUpdateInfo" value="kaydetmek" />
+    
 </form>
 
-{% if success1 %}
-    <p>{{ success1 }}</p>
-{% endif %}
-
-{% for category in categories %}
-    <p>{{ category.name }}</p>
-{% endfor %}
 
 
 
 
-<form method="POST" action="{% url 'proSettings' %}">
+
+
+<form method="POST" action="{% url 'proSettings' %}" class="align-items-center">
     {% csrf_token %}
-    <input type="text" name="newCategoryName" placeholder="Yeni kategori adı">
-    <input type="submit" name="btnAddCategory" value="Kategori ekle">
-    <select name="category">
+    <hr>
+    <div class="input-group mb-3">
+    <input type="text" name="newCategoryName" placeholder="Yeni kategori adı" class="form-control">
+    <input type="submit" name="btnAddCategory" value="Kategori ekle" class="btn btn-outline-primary btn-sm">
+    </div>
+    <hr>
+    <div class="input-group">
+    <select name="category"  class="form-select">
     {% for category in restaurant.categories.all %}
-        <option value="{{ category.id }}">{{ category.name }}</option>
+        <option required value="{{ category.id }}">{{ category.name }}</option>
     {% endfor %}
  </select>
-    <input type="submit" name="btnDeleteCategory" value="Kategoriyi sil">
-
+    <input type="submit" name="btnDeleteCategory" value="Kategoriyi sil" class="btn btn-outline-danger btn-sm" >
+    
+</div>
+    <hr>
+    <input type="submit" name= "btnUpdateInfo" value="kaydet"  class="btn btn-outline-success btn-sm"/>
 </form>
 {% if success3 %}
-    <p>{{ success3 }}</p>
+    <p class="mt-3 text-center alert alert-success" role="alert">{{ success3 }}</p>
 {% endif %}
 
 {% if error %}
-    <p>{{ error }}</p>
+    <p class="mt-3 text-center alert alert-danger" role="alert">{{ error }}</p>
 {% endif %}
+</div>
+</div>
+</div>
 
 
 {% endblock %}

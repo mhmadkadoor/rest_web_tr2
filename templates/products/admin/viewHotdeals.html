@@ -1,35 +1,67 @@
 {% extends 'base2.html' %}
 {% block content %}
+<div class="container">
 {% if user.is_authenticated %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-10 col-sm-12">
+        <a href="{% url 'admin' %}" class="btn btn-danger">Yönetim sayfasına dön</a>
+        <div class="card mb-5">
+            <div class="card-body">
 
-<a href="{% url 'admin' %}"><button>Yönetim sayfasına dön</button></a>
+
 
 <form method="POST" action="{% url 'viewHotdealsAdmin' %}" enctype="multipart/form-data">
     {% csrf_token %}
-    <label for="title">Ürün Adı</label>
-    <input type="text" name="title" required><br>
-    <label for="description">tanım</label>
-    <input type="text" name="description" required><br>
-    <label for="end_time">Teklifin bitiş zamanı</label>
-    <input type="datetime-local" name="end_time" required><br>
-    <label for="price">Eski Fiyat</label>
-    <input type="number" name="oldPrice" required><br>
-    <label for="newPrice">Yeni Fiyat</label>
-    <input type="number" name="newPrice" required><br>
-    <label for="category">Kategori</label>
-    <select name="category" required placeholder="category">
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Ürün Adı</span>
+        <input type="text" class="form-control" name="title">
+    </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Ürün Açıklaması</span>
+        <textarea class="form-control" required name="description"></textarea>
+    </div>
+
+  
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Teklifin bitiş zamanı</span>
+        <input  class="form-control" type="datetime-local" name="end_time" required>
+    </div>
+    
+   
+    <div class="input-group mb-3">
+        <span class="input-group-text" >Eski Fiyat</span>
+        <input type="number" name="oldPrice" required class="form-control">
+    </div>
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text" >Yeni Fiyat</span>
+        <input type="number" name="newPrice" required class="form-control">
+    </div>
+    <div class="input-group mb-3">
+    <label for="category" class="input-group-text">Kategori</label>
+    <select name="category" required placeholder="category" class="form-select" >
         {% for category in restaurant.categories.all %}
             <option value="{{ category.id }}">{{ category.name }}</option>
             {% endfor %}
             <option value="0">Diğer</option>
       </select>
-</div>  
-    <label for="image">Fotoğraf</label>
-    <input type="file" name="image" required><br>
-    <label for="buyingMassage">Alma mesajı </label>
-    <textarea name="buyingMassage" required placeholder='Satın alma sırasında WhatsApp mesajı'></textarea>
-    <button type="submit" name='btnAddHotdeal' >Ekle</button>
+    </div>
+    <div class="input-group mb-3">
+    <input type="file" name="image" class="form-control" required>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Whatsapp alma mesajı</span>
+    <textarea name="buyingMassage" required placeholder='Satın alma sırasında WhatsApp mesajı' class="form-control"></textarea>
+    </div>
+    <button type="submit" name='btnAddHotdeal' class="btn btn-outline-success">Ekle</button>
 </form>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 {% if success %}
     <h3>{{ success }}</h3>
@@ -39,7 +71,7 @@
     <h3>{{ error }}</h3>
 {% endif %}
 
-<h1>العروض</h1>
+<h1>teklif</h1>
  {% for hotdeal in hotdeals %}
    
     {% include "products/hotdeal.html" %}

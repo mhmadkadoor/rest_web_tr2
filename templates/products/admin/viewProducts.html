@@ -1,29 +1,52 @@
 {% extends 'base2.html' %}
 {% block content %}
+<div class="container">
 {% if user.is_authenticated %}
-<a href="{% url 'admin' %}"><button>Yönetim sayfasına dön</button></a>
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-10 col-sm-12">
+<a href="{% url 'admin' %}" class="btn btn-danger">Yönetim sayfasına dön</a>
+<div class="card mb-5">
+    <div class="card-body">
 <form method="POST" action="{% url 'viewProductsAdmin' %}"  enctype="multipart/form-data">
     {% csrf_token %}
-    <label for="title">Ürün Adı</label>
-    <input type="text" name="title" required><br>
-    <label for="description">tanım</label>
-    <input type="text" name="description" required><br>
-    <label for="price">Fiyat</label>
-    <input type="number" name="price" required><br>
-    <label for="category">Kategori</label>
-    <select name="category" required placeholder="category">
+    
+  
+    <div class="input-group mb-3">
+        <span class="input-group-text">Ürün Adı</span>
+        <input type="text" name="title" required class="form-control">
+      </div>
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text">Ürün Açıklaması</span>
+        <textarea class="form-control"  name="description" aria-label="With textarea"></textarea>
+      </div>
+   
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">Ürün Fiyatı</span>
+        <input type="number" name="price" class="form-control" >
+      </div>
+      <div class="input-group mb-3">
+    <label for="category" class="input-group-text" >Kategori</label>
+    <select name="category" required placeholder="category" class="form-select">
         {% for category in restaurant.categories.all %}
         <option value="{{ category.id }}">{{ category.name }}</option>
     {% endfor %}
       </select>
-    <label for="image">Fotoğraf</label>
-    <input type="file" required name="image">
-    <label for="buyingMassage">Alma mesajı</label>
-    <textarea name="buyingMassage" required placeholder='Satın alma sırasında WhatsApp mesajı'></textarea>
-    <button type="submit" name='btnAddProduct'>Ekle</button>
+    </div>
+    <div class="input-group mb-3">
+    <input type="file" required name="image" class="form-control">
+    </div>
+    <div class="input-group">
+        <span class="input-group-text">Whatsapp alma mesajı</span>
+    <textarea name="buyingMassage" required placeholder='Satın alma sırasında WhatsApp mesajı' class="form-control"></textarea>
+    </div>
+    <button type="submit" name='btnAddProduct' class="btn btn-outline-success mt-3">Ekle</button>
 
 </form>
-
+</div>
+</div>
+</div>
+</div>
 {% if success %}
     <h3>{{ success }}</h3>
 {% endif %}
