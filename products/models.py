@@ -17,6 +17,10 @@ class Product(models.Model):
     def __str__(self):
         return self.title
     
+class HotdealsManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(end_time__gt=timezone.now())
+    
 class Hotdeals(models.Model):
 
     
@@ -30,15 +34,4 @@ class Hotdeals(models.Model):
     sender_id = models.IntegerField()
     end_time = models.DateTimeField()
     
-
-    def __str__(self):
-        return self.title
-    
-    def check_and_delete_expired_deal(self):
-        """
-        Check if the deal has expired based on the `end_time`.
-        If it has expired, delete the instance.
-        """
-        now = timezone.now()
-        if self.end_time <= now:
-            self.delete()
+    objects = HotdealsManager()

@@ -104,9 +104,11 @@
                 </div>
             </div>
                 {% if selected_category or lastSearch %}
+                    {% if selected_category_name %}
                     <h4 class="mt-4 text-center">
                         <span class="text-danger fs-1 bg-light ps-5 pe-5 pt-1 pb-1" style="border-radius:10px;">{{ selected_category_name }}</span>
                     </h4>
+                    {% endif %}
                     
                     <h1 class="text-light d-flex align-items-center justify-content-center text-center pt-5 pb-2">Ürünler<i class="fa-solid fa-bowl-food ps-3 fs-1 text-warning"></i></h1>
                     <div class="row">
@@ -126,12 +128,14 @@
                             <p class="text-light">üzgünüm, Aramayla eşleşen yemek bulunamadı.</p>
                         {% endfor %}
                     </div>
+                    {% if hotdeal_results %}
                     <h1 class="text-light d-flex align-items-center justify-content-center text-center pt-4 pb-2">
                         Teklifler 
                         <i class="fa-solid fa-fire fs-1 ps-3 text-danger"></i>
                     </h1>
                     
                     <div class="row">
+                        
                         {% for hotdeal in hotdeal_results %}
                             <div class="col-md-4 mb-4">
                                 <div class="card position-relative">
@@ -152,7 +156,9 @@
                         {% empty %}
                             <p class="text-light">Aramanızla eşleşen teklif yok</p>
                         {% endfor %}
+                        
                     </div>
+                    {% endif %}
                 {% else %}
                     <div class="d-flex justify-content-center align-items-center mt-5">
                         <h1 class="text-muted text-center">Henüz arama yapılmadı</h1>
