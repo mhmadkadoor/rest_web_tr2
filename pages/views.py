@@ -10,6 +10,7 @@ from products.models import Product, Hotdeals
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from django.db.models import Q 
+from django.db.models import Count
 
 
 
@@ -30,10 +31,17 @@ def home(request):
     user = request.user
     products = Product.objects.all()
     hotdeals = Hotdeals.objects.all()
-    categories = Category.objects.filter(restaurant=restaurant)
+    categories = Category.objects.filter(restaurant=restaurant).annotate(product_count=Count('product')).filter(product_count__gt=0)
 
+    return render(request, 'pages/home.html', {
+        "thisPage": 'home',
+        'restaurant': restaurant,
+        'products': products,
+        'hotdeals': hotdeals,
+        'user': user,
+        'categories': categories
+    })
 
-    return render(request, 'pages/home.html', {"thisPage": 'home', 'restaurant': restaurant, 'products': products, 'hotdeals': hotdeals, 'user': user, 'categories': categories})
 
 
 def login(request):

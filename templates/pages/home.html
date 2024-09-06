@@ -16,24 +16,26 @@
    
     <a href="{% url 'all' %}" type="button" class="text-decoration-none btn btn-danger">Tüm ürünleri görüntüle</a>
    
+    {% if hotdeals %}
     <h1 class="mb-5 text-light">Teklifler:</h1>
     {% for hotdeal in hotdeals %}
         {% include "products/hotdeal.html" %}
     {% endfor %}
+{% endif %}
 
 
 
-    <h1 class="text-light">Ürünler:</h1>
-    {% for category in categories %}
-            <h2 class="bg-light text-danger  text-center pt-1 pb-1">{{ category }}</h2>
 
-        {% for product in products %}
-            {% if product.category == category %}
-                
-                {% include "products/product.html" %}
-            {% endif %}
-        {% endfor %}
+<h1 class="text-light">Ürünler:</h1>
+{% for category in categories %}
+    <h2 class="bg-light text-danger text-center pt-1 pb-1">{{ category }}</h2>
+    {% for product in products %}
+        {% if product.category == category %}
+            {% include "products/product.html" %}
+        {% endif %}
     {% endfor %}
+{% endfor %}
+
      
             </div>
         </div>
